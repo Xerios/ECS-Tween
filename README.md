@@ -1,5 +1,5 @@
 # ECS-Tween
-A very simple Unity tweening engine using ECS that works with GameObjects!
+A very simple Unity tweening engine using pure ECS that works with GameObjects!
 
 This is still very early stage, and it only supports position tweening, and two easing types ( Linear and ExpIn )
 
