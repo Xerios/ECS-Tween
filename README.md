@@ -25,16 +25,16 @@ The following ComponentData types are required to update GameObject's transform.
 * **Position**: Required for CopyTransformToGameObject
 * **CopyTransformToGameObject**: Required to update GameObject's transform from Position
 
-## TweenNormalizedTimeSystem
+### TweenNormalizedTimeSystem
 We first normalize time from using _TweenTime_ and _TweenLifetime_, this is handled by this system. _TweenTime_ is the final normalized result.
 
-## TweenEasingExponentialSystem
+### TweenEasingExponentialSystem
 When _TweenEasingExpIn_ is present, we transform the data after _TweenNormalizedTimeSystem_ has been executed. This transforms Linear time into ExpIn time value.
 
-## TweenRemoveSystem
+### TweenRemoveSystem
 Handles removal of entities ( not GameObjects ) that are past their lifetime ( _TweenLifetime_ )
 
-## TweenPositionSystem
+### TweenPositionSystem
 Interpolates position using _TweenTime_ and _TweenTarget_ and sets _Position_.
 
 
