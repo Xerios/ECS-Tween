@@ -8,8 +8,8 @@ This is still very early stage, and it only supports position tweening, and two 
 
 # Example
 ```csharp
-Tween.Position(GameObject, target, 10f);
-Tween.Position(GameObject, new Vector3(-10f, 0, 0), new Vector3(10f, 0, 0), 10f);
+Tween.Position(GameObject, target, 10f, EasingType.ExpIn);
+Tween.Position(GameObject, new Vector3(-10f, 0, 0), new Vector3(10f, 0, 0), 10f, EasingType.Linear);
 Tween.MovePosition(GameObject, new Vector3(10f, 0, 0), 10f);
 ```
 
