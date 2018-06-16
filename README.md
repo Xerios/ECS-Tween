@@ -19,24 +19,28 @@ The idea behind this is to harvest ECS architecture to execute thousands of twee
 By using one of the tweening functions, we add an Entity to a GameObject and then include the following ComponentData types:
 * **TweenLifetime**: Contains Start Time, and Lifetime ( tween time )
 * **TweenTime**: Represents normalized time, calculated using current time and TweenLifetime values
-* **TweenTarget**: contains current position and target position to interpolate
+* **TweenPosition**: contains current position and target position to interpolate
 
 The following ComponentData types are required to update GameObject's transform.
 * **Position**: Required for CopyTransformToGameObject
 * **CopyTransformToGameObject**: Required to update GameObject's transform from Position
 
-### TweenNormalizedTimeSystem
+# The flow
+
+### 1. TweenNormalizedTimeSystem
 We first normalize time from using _TweenTime_ and _TweenLifetime_, this is handled by this system. _TweenTime_ is the final normalized result.
 
-### TweenEasingExponentialSystem
+### 2. TweenEasingExponentialSystem ( only used for ExpIn easing )
 When _TweenEasingExpIn_ is present, we transform the data after _TweenNormalizedTimeSystem_ has been executed. This transforms Linear time into ExpIn time value.
 
-### TweenRemoveSystem
+### 3. TweenPositionSystem
+Interpolates position using _TweenTime_ and _TweenPosition_ and sets _Position_.
+
+### 4. TweenRemoveSystem
 Handles removal of entities ( not GameObjects ) that are past their lifetime ( _TweenLifetime_ )
 
-### TweenPositionSystem
-Interpolates position using _TweenTime_ and _TweenTarget_ and sets _Position_.
-
+### 5. Unity.Transforms.CopyTransformToGameObjectSystem
+Takes Position, Rotation, LocalPosition, LocalRotation and applies them to the GameObject.
 
 # Contribute
 
