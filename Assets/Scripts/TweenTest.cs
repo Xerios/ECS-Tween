@@ -11,7 +11,7 @@ public class TweenTest : MonoBehaviour
     void Start()
     {
         var entityManager = World.Active.GetExistingManager<EntityManager>();
-        var dest = new Vector3(10f, 0, 0);
+        var dest = new Vector3(20f, 0, 0);
 
         foreach (Transform item in transform)
         {
