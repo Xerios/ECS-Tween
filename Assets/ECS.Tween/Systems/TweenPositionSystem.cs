@@ -16,7 +16,7 @@ namespace ECSTween
         {
             public ComponentDataArray<Position> positions;
             [ReadOnly]
-            public ComponentDataArray<TweenTarget> target;
+            public ComponentDataArray<TweenPosition> target;
             [ReadOnly]
             public ComponentDataArray<TweenTime> tweenTime;
 
@@ -26,11 +26,11 @@ namespace ECSTween
         [Inject] private TweenGroup m_Tweens;
 
         [BurstCompile]
-        struct TweenJob : IJobParallelFor
+        struct PositionTweenJob : IJobParallelFor
         {
             public ComponentDataArray<Position> positions;
             [ReadOnly]
-            public ComponentDataArray<TweenTarget> target;
+            public ComponentDataArray<TweenPosition> target;
             [ReadOnly]
             public ComponentDataArray<TweenTime> tweenTime;
 
@@ -47,7 +47,7 @@ namespace ECSTween
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            var job = new TweenJob()
+            var job = new PositionTweenJob()
             {
                 positions = m_Tweens.positions,
                 target = m_Tweens.target,

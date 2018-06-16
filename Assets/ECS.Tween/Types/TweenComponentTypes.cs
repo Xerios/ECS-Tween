@@ -15,7 +15,7 @@ namespace ECSTween
         public float Lifetime;
     }
 
-    public struct TweenTarget : IComponentData
+    public struct TweenPosition : IComponentData
     {
         public float3 From;
         public float3 To;

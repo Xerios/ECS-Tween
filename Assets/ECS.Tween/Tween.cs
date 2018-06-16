@@ -61,7 +61,7 @@ namespace ECSTween
             entityManager.AddComponentData(entity, new CopyTransformToGameObject());
             entityManager.AddComponentData(entity, new TweenTime());
             entityManager.AddComponentData(entity, new TweenLifetime() { StartTime = Time.time, Lifetime = time });
-            entityManager.AddComponentData(entity, new TweenTarget()
+            entityManager.AddComponentData(entity, new TweenPosition()
             {
                 From = pos,
                 To = to
