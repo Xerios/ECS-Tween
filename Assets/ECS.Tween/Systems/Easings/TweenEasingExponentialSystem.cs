@@ -8,7 +8,8 @@ using UnityEngine;
 
 namespace ECSTween
 {
-    [UpdateAfter(typeof(TweenNormalizedTimeSystem))]
+    [UpdateAfter(typeof(TweenTimeUpdateGroup))]
+    [UpdateInGroup(typeof(TweenEasingJob))]
     public class TweenEasingExponentialSystem : JobComponentSystem
     {
         struct TweenData

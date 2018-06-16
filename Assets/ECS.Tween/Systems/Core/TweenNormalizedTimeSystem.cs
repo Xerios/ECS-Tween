@@ -9,6 +9,7 @@ using UnityEngine;
 namespace ECSTween
 {
     // Calculates normalized time value ( 0 - 1 ) based on start time and end time
+    [UpdateInGroup(typeof(TweenTimeUpdateGroup))]
     public class TweenNormalizedTimeSystem : JobComponentSystem
     {
         struct TweenData

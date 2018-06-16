@@ -9,7 +9,8 @@ using UnityEngine.Jobs;
 
 namespace ECSTween
 {
-    [UpdateAfter(typeof(UnityEngine.Experimental.PlayerLoop.Update))]
+    [UpdateAfter(typeof(TweenTimeUpdateGroup))]
+    [UpdateAfter(typeof(TweenEasingUpdateGroup))]
     public class TweenPositionSystem : JobComponentSystem
     {
         struct TweenGroup
