@@ -8,9 +8,10 @@ This is still very early stage, and it only supports position tweening, and two 
 
 # Example
 ```csharp
-Tween.Position(gameObject, targetPosition, 10f, EasingType.ExpIn);
-Tween.Position(gameObject, fromPosition, toPosition, 10f, EasingType.Linear);
-Tween.MovePosition(gameObject, translateVector, 10f);
+float time = 10f; // 10 seconds
+Tween.Position(gameObject, targetPosition, time, EasingType.ExpIn);
+Tween.Position(gameObject, fromPosition, toPosition, time, EasingType.Linear);
+Tween.MovePosition(gameObject, translateVector, time);
 ```
 
 # How does it work?
