@@ -16,10 +16,8 @@ namespace ECSTween
         struct TweenGroup
         {
             public ComponentDataArray<Position> positions;
-            [ReadOnly]
-            public ComponentDataArray<TweenPosition> target;
-            [ReadOnly]
-            public ComponentDataArray<TweenTime> tweenTime;
+            [ReadOnly] public ComponentDataArray<TweenPosition> target;
+            [ReadOnly] public ComponentDataArray<TweenTime> tweenTime;
 
             public int Length;
         }
@@ -30,19 +28,14 @@ namespace ECSTween
         struct PositionTweenJob : IJobParallelFor
         {
             public ComponentDataArray<Position> positions;
-            [ReadOnly]
-            public ComponentDataArray<TweenPosition> target;
-            [ReadOnly]
-            public ComponentDataArray<TweenTime> tweenTime;
+            [ReadOnly] public ComponentDataArray<TweenPosition> target;
+            [ReadOnly] public ComponentDataArray<TweenTime> tweenTime;
 
             public float dt;
 
             public void Execute(int i)
             {
-                positions[i] = new Position
-                {
-                    Value = math.lerp(target[i].From, target[i].To, tweenTime[i].Value)
-                };
+                positions[i] = new Position(math.lerp(target[i].From, target[i].To, tweenTime[i].Value));
             }
         }
 

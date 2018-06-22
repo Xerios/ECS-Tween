@@ -13,8 +13,8 @@ namespace ECSTween
         public struct Data
         {
             public int Length;
-            public EntityArray Entities;
-            public ComponentDataArray<TweenLifetime> Ranges;
+            [ReadOnly] public EntityArray Entities;
+            [ReadOnly] public ComponentDataArray<TweenLifetime> Ranges;
         }
 
         [Inject] private Data m_Data;

@@ -15,7 +15,7 @@ namespace ECSTween
         struct TweenData
         {
             public int Length;
-            public ComponentDataArray<TweenTime> Times;
+            [WriteOnly] public ComponentDataArray<TweenTime> Times;
             [ReadOnly] public ComponentDataArray<TweenLifetime> TimeRanges;
         }
 
@@ -26,7 +26,7 @@ namespace ECSTween
         {
             public float t;
 
-            public ComponentDataArray<TweenTime> Times;
+            [WriteOnly] public ComponentDataArray<TweenTime> Times;
             [ReadOnly] public ComponentDataArray<TweenLifetime> TimeRanges;
 
             public void Execute(int index)

@@ -6,40 +6,38 @@ using UnityEngine;
 
 namespace ECSTween
 {
-    public enum EasingType
-    {
-        Linear,
-        ExpIn
-    }
-
-    public static class Tween
+    public static partial class Tween
     {
         /// <summary>
-        /// Tween current position by a value
+        /// Initiates base entity to work with tweens ( internal function )
         /// </summary>
         /// <param name="go">GameObject</param>
-        /// <param name="move">Translate position by this value</param>
         /// <param name="time">Interpolation time</param>
         /// <param name="easing">Easing type</param>
-        public static void MovePosition(GameObject go, Vector3 move, float time, EasingType easing = EasingType.Linear)
+        private static Entity BaseTween(GameObject go, float time, EasingType easing = EasingType.Linear)
         {
             var entityManager = World.Active.GetExistingManager<EntityManager>();
-            var from = go.transform.position;
-            Position(go, from, from + move, time, easing);
-        }
 
-        /// <summary>
-        /// Tween current position to another
-        /// </summary>
-        /// <param name="go">GameObject</param>
-        /// <param name="to">Translate position to this destination</param>
-        /// <param name="time">Interpolation time</param>
-        /// <param name="easing">Easing type</param>
-        public static void Position(GameObject go, Vector3 to, float time, EasingType easing = EasingType.Linear)
-        {
-            var entityManager = World.Active.GetExistingManager<EntityManager>();
-            var from = go.transform.position;
-            Position(go, from, to, time, easing);
+            // Link a (new) entity with an existing GameObject
+            var entity = GameObjectEntity.AddToEntityManager(entityManager, go);
+
+            // Add our componentDatas
+            entityManager.AddComponentData(entity, new TweenTime());
+            entityManager.AddComponentData(entity, new TweenLifetime() { StartTime = Time.time, Lifetime = time });
+
+            // Setup easing componentdata depending on easing type
+            switch (easing)
+            {
+                case EasingType.ExpIn:
+                    entityManager.AddComponentData(entity, new TweenEasingExpIn());
+                    break;
+                case EasingType.Linear:
+                // Nothing happens here since we don't need to modify the normalized time value
+                default:
+                    break;
+            }
+
+            return entity;
         }
 
         /// <summary>
@@ -54,28 +52,14 @@ namespace ECSTween
         {
             var entityManager = World.Active.GetExistingManager<EntityManager>();
 
-            var pos = go.transform.position;
-
-            var entity = GameObjectEntity.AddToEntityManager(entityManager, go);
-            entityManager.AddComponentData(entity, new Position() { Value = pos });
+            var entity = BaseTween(go, time, easing);
+            entityManager.AddComponentData(entity, new Position(from));
             entityManager.AddComponentData(entity, new CopyTransformToGameObject());
-            entityManager.AddComponentData(entity, new TweenTime());
-            entityManager.AddComponentData(entity, new TweenLifetime() { StartTime = Time.time, Lifetime = time });
             entityManager.AddComponentData(entity, new TweenPosition()
             {
-                From = pos,
+                From = from,
                 To = to
             });
-
-            switch (easing)
-            {
-                case EasingType.ExpIn:
-                    entityManager.AddComponentData(entity, new TweenEasingExpIn());
-                    break;
-                case EasingType.Linear:
-                default:
-                    break;
-            }
         }
     }
 }
