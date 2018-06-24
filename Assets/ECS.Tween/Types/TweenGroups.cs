@@ -4,3 +4,5 @@
 public class TweenTimeUpdateGroup { }
 
 public class TweenEasingUpdateGroup { }
+
+public class TweenInterpolationGroup { }

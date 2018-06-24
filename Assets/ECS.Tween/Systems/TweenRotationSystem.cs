@@ -11,6 +11,7 @@ namespace ECSTween
 {
     [UpdateAfter(typeof(TweenTimeUpdateGroup))]
     [UpdateAfter(typeof(TweenEasingUpdateGroup))]
+    [UpdateInGroup(typeof(TweenInterpolationGroup))]
     public class TweenRotationSystem : JobComponentSystem
     {
         [BurstCompile]

@@ -7,6 +7,7 @@ using UnityEngine;
 namespace ECSTween
 {
     // Removes all entities ( not gameObjects ) that have TweenRange beyond their lifetime
+    [UpdateInGroup(typeof(TweenTimeUpdateGroup))]
     [UpdateAfter(typeof(UnityEngine.Experimental.PlayerLoop.PostLateUpdate))]
     public class TweenRemoveSystem : ComponentSystem
     {
