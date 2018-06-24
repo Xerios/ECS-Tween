@@ -25,7 +25,7 @@ namespace ECSTween
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            return new TweenNormalizedTimeJob() { t = Time.time }.Schedule(this, 64, inputDeps);
+            return new TweenNormalizedTimeJob() { t = Time.time }.Schedule(this, 128, inputDeps);
         }
     }
 }

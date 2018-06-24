@@ -24,7 +24,7 @@ namespace ECSTween
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            return new TweenEasingJob().Schedule(this, 64, inputDeps);
+            return new TweenEasingJob().Schedule(this, 128, inputDeps);
         }
     }
 }
