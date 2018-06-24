@@ -13,43 +13,18 @@ namespace ECSTween
     [UpdateAfter(typeof(TweenEasingUpdateGroup))]
     public class TweenPositionSystem : JobComponentSystem
     {
-        struct TweenGroup
-        {
-            public ComponentDataArray<Position> positions;
-            [ReadOnly] public ComponentDataArray<TweenPosition> target;
-            [ReadOnly] public ComponentDataArray<TweenTime> tweenTime;
-
-            public int Length;
-        }
-
-        [Inject] private TweenGroup m_Tweens;
-
         [BurstCompile]
-        struct PositionTweenJob : IJobParallelFor
+        struct TweenPositionJob : IJobProcessComponentData<TweenTime, TweenPosition, Position>
         {
-            public ComponentDataArray<Position> positions;
-            [ReadOnly] public ComponentDataArray<TweenPosition> target;
-            [ReadOnly] public ComponentDataArray<TweenTime> tweenTime;
-
-            public float dt;
-
-            public void Execute(int i)
+            public void Execute([ReadOnly]ref TweenTime time, [ReadOnly]ref TweenPosition positionInterpolate, ref Position position)
             {
-                positions[i] = new Position(math.lerp(target[i].From, target[i].To, tweenTime[i].Value));
+                position = new Position(math.lerp(positionInterpolate.From, positionInterpolate.To, time.Value));
             }
         }
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            var job = new PositionTweenJob()
-            {
-                positions = m_Tweens.positions,
-                target = m_Tweens.target,
-                tweenTime = m_Tweens.tweenTime,
-                dt = Time.deltaTime
-            };
-
-            return job.Schedule(m_Tweens.Length, 64, inputDeps);
+            return new TweenPositionJob().Schedule(this, 64, inputDeps);
         }
     }
 }

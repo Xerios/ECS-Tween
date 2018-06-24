@@ -13,30 +13,18 @@ namespace ECSTween
     [UpdateAfter(typeof(TweenEasingUpdateGroup))]
     public class TweenRotationSystem : JobComponentSystem
     {
-        struct TweenGroup
+        [BurstCompile]
+        struct TweenRotationJob : IJobProcessComponentData<TweenTime, TweenRotation, Rotation>
         {
-            public ComponentDataArray<Rotation> rotations;
-            [ReadOnly] public ComponentDataArray<TweenRotation> target;
-            [ReadOnly] public ComponentDataArray<TweenTime> tweenTime;
-
-            public int Length;
+            public void Execute([ReadOnly]ref TweenTime time, [ReadOnly]ref TweenRotation rotationInterpolate, ref Rotation rotation)
+            {
+                rotation = new Rotation(slerp(rotationInterpolate.From, rotationInterpolate.To, time.Value));
+            }
         }
 
-        [Inject] private TweenGroup m_Tweens;
-
-        [BurstCompile]
-        struct RotationTweenJob : IJobParallelFor
+        protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            public ComponentDataArray<Rotation> rotations;
-            [ReadOnly] public ComponentDataArray<TweenRotation> target;
-            [ReadOnly] public ComponentDataArray<TweenTime> tweenTime;
-
-            public float dt;
-
-            public void Execute(int i)
-            {
-                rotations[i] = new Rotation(slerp(target[i].From, target[i].To, tweenTime[i].Value));
-            }
+            return new TweenRotationJob().Schedule(this, 64, inputDeps);
         }
 
         // Temporary fix until they update their quaternion library ( taken from latest math library and modified few things )
@@ -65,18 +53,5 @@ namespace ECSTween
             }
         }
         // -----------------------------------------------------------------------------
-
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
-        {
-            var job = new RotationTweenJob()
-            {
-                rotations = m_Tweens.rotations,
-                target = m_Tweens.target,
-                tweenTime = m_Tweens.tweenTime,
-                dt = Time.deltaTime
-            };
-
-            return job.Schedule(m_Tweens.Length, 64, inputDeps);
-        }
     }
 }
