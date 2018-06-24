@@ -21,6 +21,13 @@ namespace ECSTween
         public float3 To;
     }
 
+    public struct TweenRotation : IComponentData
+    {
+        public quaternion From;
+        public quaternion To;
+    }
+
+
     // Easings
     struct TweenEasingExpIn : IComponentData { }
 }
