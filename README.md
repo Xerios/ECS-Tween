@@ -1,7 +1,8 @@
 # ECS-Tween
 A very simple Unity tweening engine using pure ECS that works with GameObjects!
 
-This is still very early stage, and it only supports position tweening, and two easing types ( Linear and ExpIn )
+This is still very early stage, and it only supports position and rotation tweening, and two easing types ( Linear and ExpIn )
+Rotation and Position can be used simulatinously.
 
 ![Main screenshot](/Screenshots/main.png)
 ![Entities](/Screenshots/entities.png)
@@ -12,6 +13,7 @@ float time = 10f; // 10 seconds
 Tween.Position(gameObject, targetPosition, time, EasingType.ExpIn);
 Tween.Position(gameObject, fromPosition, toPosition, time, EasingType.Linear);
 Tween.MovePosition(gameObject, translateVector, time);
+Tween.Rotation(gameObject, Random.rotation,  Random.rotation, time, EasingType.ExpIn);
 ```
 
 # How does it work?
@@ -35,8 +37,8 @@ We first normalize time from using _TweenTime_ and _TweenLifetime_, this is hand
 When _TweenEasingExpIn_ is present, we transform _TweenTime_ value after _TweenNormalizedTimeSystem_ has been executed. 
 This transforms Linear time into ExpIn time value.
 
-### 3. TweenPositionSystem
-Interpolates position using _TweenTime_ and _TweenPosition_ and sets _Position_.
+### 3. TweenPositionSystem / TweenRotationSystem
+Interpolates position/rotation using _TweenTime_ and _TweenPosition_ and sets _Position_/_Rotation_.
 
 ### 4. TweenRemoveSystem
 Handles removal of entities ( not GameObjects ) that are past their lifetime ( _TweenLifetime_ )
