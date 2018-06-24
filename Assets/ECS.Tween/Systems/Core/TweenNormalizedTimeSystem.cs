@@ -20,6 +20,7 @@ namespace ECSTween
             public void Execute([WriteOnly] ref TweenTime time, [ReadOnly] ref TweenLifetime range)
             {
                 time.Value = (t - range.StartTime) / range.Lifetime;
+                if (time.Value > 1f) time.Value = 1f;
             }
         }
 
