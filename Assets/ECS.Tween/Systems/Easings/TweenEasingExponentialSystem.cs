@@ -12,39 +12,19 @@ namespace ECSTween
     [UpdateInGroup(typeof(TweenEasingJob))]
     public class TweenEasingExponentialSystem : JobComponentSystem
     {
-        struct TweenData
-        {
-            public int Length;
-            public ComponentDataArray<TweenTime> NormalizedTimes;
-            [ReadOnly] public ComponentDataArray<TweenEasingExpIn> TweenEasingType; // Used for filtering only
-        }
-
-        [Inject] private TweenData m_tweenData;
-
         [BurstCompile]
-        struct TweenEasingJob : IJobParallelFor
+        [RequireComponentTag(typeof(TweenEasingExpIn))]
+        struct TweenEasingJob : IJobProcessComponentData<TweenTime>
         {
-            public float t;
-
-            public ComponentDataArray<TweenTime> NormalizedTimes;
-
-            public void Execute(int index)
+            public void Execute(ref TweenTime time)
             {
-                var time = NormalizedTimes[index];
                 time.Value = time.Value == 0f ? 0f : math.pow(1024f, time.Value - 1f);
-                NormalizedTimes[index] = time;
             }
         }
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            var job = new TweenEasingJob()
-            {
-                t = Time.time,
-                NormalizedTimes = m_tweenData.NormalizedTimes
-            };
-
-            return job.Schedule(m_tweenData.Length, 64, inputDeps);
+            return new TweenEasingJob().Schedule(this, 64, inputDeps);
         }
     }
 }

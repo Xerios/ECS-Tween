@@ -12,43 +12,20 @@ namespace ECSTween
     [UpdateInGroup(typeof(TweenTimeUpdateGroup))]
     public class TweenNormalizedTimeSystem : JobComponentSystem
     {
-        struct TweenData
-        {
-            public int Length;
-            [WriteOnly] public ComponentDataArray<TweenTime> Times;
-            [ReadOnly] public ComponentDataArray<TweenLifetime> TimeRanges;
-        }
-
-        [Inject] private TweenData m_tweenData;
-
         [BurstCompile]
-        struct TweenTimeJob : IJobParallelFor
+        struct TweenNormalizedTimeJob : IJobProcessComponentData<TweenTime, TweenLifetime>
         {
             public float t;
 
-            [WriteOnly] public ComponentDataArray<TweenTime> Times;
-            [ReadOnly] public ComponentDataArray<TweenLifetime> TimeRanges;
-
-            public void Execute(int index)
+            public void Execute([WriteOnly] ref TweenTime time, [ReadOnly] ref TweenLifetime range)
             {
-                var range = TimeRanges[index];
-                Times[index] = new TweenTime()
-                {
-                    Value = (t - range.StartTime) / range.Lifetime
-                };
+                time.Value = (t - range.StartTime) / range.Lifetime;
             }
         }
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            var job = new TweenTimeJob()
-            {
-                t = Time.time,
-                Times = m_tweenData.Times,
-                TimeRanges = m_tweenData.TimeRanges
-            };
-
-            return job.Schedule(m_tweenData.Length, 64, inputDeps);
+            return new TweenNormalizedTimeJob() { t = Time.time }.Schedule(this, 64, inputDeps);
         }
     }
 }
