@@ -9,12 +9,12 @@ using UnityEngine;
 namespace ECSTween
 {
     [UpdateAfter(typeof(TweenTimeUpdateGroup))]
-    [UpdateInGroup(typeof(TweenEasingJob))]
-    public class TweenEasingExponentialSystem : JobComponentSystem
+    [UpdateInGroup(typeof(TweenEasingUpdateGroup))]
+    public class TweenEasingExpInSystem : JobComponentSystem
     {
         [BurstCompile]
         [RequireComponentTag(typeof(TweenEasingExpIn))]
-        struct TweenEasingJob : IJobProcessComponentData<TweenTime>
+        struct TweenExpInEasingJob : IJobProcessComponentData<TweenTime>
         {
             public void Execute(ref TweenTime time)
             {
@@ -24,7 +24,7 @@ namespace ECSTween
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            return new TweenEasingJob().Schedule(this, 128, inputDeps);
+            return new TweenExpInEasingJob().Schedule(this, 128, inputDeps);
         }
     }
 }

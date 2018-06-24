@@ -33,7 +33,7 @@ The following ComponentData types are required to update GameObject's transform.
 ### 1. TweenNormalizedTimeSystem
 We first normalize time from using _TweenTime_ and _TweenLifetime_, this is handled by this system. _TweenTime_ is the final normalized result.
 
-### 2. TweenEasingExponentialSystem ( only used for ExpIn easing )
+### 2. TweenEasingExpInSystem ( only used for ExpIn easing )
 When _TweenEasingExpIn_ is present, we transform _TweenTime_ value after _TweenNormalizedTimeSystem_ has been executed. 
 This transforms Linear time into ExpIn time value.
 
