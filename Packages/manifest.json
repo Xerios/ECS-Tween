@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "com.unity.entities": "0.0.12-preview.6"
+    "com.unity.entities": "0.0.12-preview.6",
+    "com.unity.incrementalcompiler": "0.0.42-preview.1"
   }
 }
