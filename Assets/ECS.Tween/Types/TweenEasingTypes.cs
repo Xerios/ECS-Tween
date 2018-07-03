@@ -4,6 +4,7 @@ namespace ECSTween
     public enum EasingType
     {
         Linear,
-        ExpIn
+        ExpIn,
+        ExpOut
     }
 }

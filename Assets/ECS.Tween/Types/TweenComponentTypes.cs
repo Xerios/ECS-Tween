@@ -30,4 +30,5 @@ namespace ECSTween
 
     // Easings
     struct TweenEasingExpIn : IComponentData { }
+    struct TweenEasingExpOut : IComponentData { }
 }

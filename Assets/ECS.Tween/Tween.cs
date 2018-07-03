@@ -31,6 +31,9 @@ namespace ECSTween
                 case EasingType.ExpIn:
                     entityManager.AddComponentData(entity, new TweenEasingExpIn());
                     break;
+                case EasingType.ExpOut:
+                    entityManager.AddComponentData(entity, new TweenEasingExpOut());
+                    break;
                 case EasingType.Linear:
                 // Nothing happens here since we don't need to modify the normalized time value
                 default:
