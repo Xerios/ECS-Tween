@@ -18,7 +18,7 @@ namespace ECSTween
         {
             public void Execute(ref TweenTime time)
             {
-                time.Value = time.Value == 0f ? 0f : math.pow(1024f, time.Value - 1f);
+                time.Value = math.pow(2f, time.Value - 1f);
             }
         }
 
