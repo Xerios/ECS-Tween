@@ -36,6 +36,7 @@ We first normalize time from using _TweenTime_ and _TweenLifetime_, this is hand
 ### 2. TweenEasingExpInSystem ( only used for ExpIn easing )
 When _TweenEasingExpIn_ is present, we transform _TweenTime_ value after _TweenNormalizedTimeSystem_ has been executed. 
 This transforms Linear time into ExpIn time value.
+_( same for TweenEasingExpOutSystem )_
 
 ### 3. TweenPositionSystem / TweenRotationSystem
 Interpolates position/rotation using _TweenTime_ and _TweenPosition_ and sets _Position_/_Rotation_.
@@ -44,8 +45,20 @@ Interpolates position/rotation using _TweenTime_ and _TweenPosition_ and sets _P
 Handles removal of entities ( not GameObjects ) that are past their lifetime ( _TweenLifetime_ )
 ( Perhaps not the best decision as it detroys the entity with all its ComponentData )
 
-### 5. Unity.Transforms.CopyTransformToGameObjectSystem
-Takes Position, Rotation, LocalPosition, LocalRotation and applies them to the GameObject.
+### 5. TweenUpdateTransformSystem
+Takes Position, Rotation and applies them to the GameObject.
+
+
+# Groups
+
+Groups are necessary to keep the correct update order, because we can't interpolate when time needs to be tweened first. Same thing for copying Entity transform to GameObject, we have to first interpolate it before we apply it to our GameObjects.
+
+### 1. TweenTimeUpdateGroup
+Main time normalization job
+### 2. TweenEasingUpdateGroup
+Includes all easing calculation jobs
+### 3. TweenInterpolationGroup
+All lerping/slerping of positions/rotations
 
 # Contribute
 
