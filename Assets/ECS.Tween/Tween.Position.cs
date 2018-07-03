@@ -22,7 +22,6 @@ namespace ECSTween
 
             var entity = BaseTween(go, time, easing);
             entityManager.AddComponentData(entity, new Position(from));
-            entityManager.AddComponentData(entity, new CopyTransformToGameObject());
             entityManager.AddComponentData(entity, new TweenPosition()
             {
                 From = from,
