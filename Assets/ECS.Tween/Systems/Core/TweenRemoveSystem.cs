@@ -13,7 +13,7 @@ namespace ECSTween
     {
         public struct Data
         {
-            public int Length;
+            public readonly int Length;
             [ReadOnly] public EntityArray Entities;
             [ReadOnly] public ComponentDataArray<TweenLifetime> Ranges;
         }
