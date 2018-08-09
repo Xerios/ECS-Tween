@@ -45,10 +45,14 @@ _( same for TweenEasingExpOutSystem )_
 ### 3. TweenPosition System / TweenRotation System
 Interpolates position/rotation using _TweenTime_ and _TweenPosition_ and sets _Position_/_Rotation_.
 
-### 4. TweenRemove System
-Handles removal of entities ( not GameObjects ) that are past their lifetime ( _TweenLifetime_ )
+### 4. TweenComplete System
+Marks entities as complete ( _TweenComplete_ ) that are past their lifetime ( _TweenLifetime_ )
 
-### 5. TweenUpdateTransform System
+### 5. TweenRemove System
+Handles removal of entities ( not GameObjects ) that are marked as complete ( _TweenComplete_ )
+Reason why this and previous systems are separate is because we would like to be able to have callbacks before an entity is removed.
+
+### 6. TweenUpdateTransform System
 Takes Position, Rotation and applies them to the GameObject.
 
 
