@@ -2,7 +2,7 @@
   "registry": "https://staging-packages.unity.com",
   "dependencies": {
     "com.unity.entities": "0.0.12-preview.8",
-    "com.unity.incrementalcompiler": "0.0.42-preview.9",
+    "com.unity.incrementalcompiler": "0.0.42-preview.14",
     "com.unity.package-manager-ui": "1.9.11"
   }
 }
