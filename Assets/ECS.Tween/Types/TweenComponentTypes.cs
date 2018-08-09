@@ -27,6 +27,7 @@ namespace ECSTween
         public quaternion To;
     }
 
+    public struct TweenComplete : IComponentData { }
 
     // Easings
     struct TweenEasingExpIn : IComponentData { }

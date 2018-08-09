@@ -7,14 +7,15 @@ using UnityEngine;
 namespace ECSTween
 {
     // Removes all entities ( not gameObjects ) that have TweenRange beyond their lifetime
-    [UpdateAfter(typeof(TweenCompleteSystem))]
-    public class TweenRemoveSystem : ComponentSystem
+    [UpdateAfter(typeof(TweenInterpolationGroup))]
+    [UpdateAfter(typeof(UnityEngine.Experimental.PlayerLoop.PostLateUpdate))]
+    public class TweenCompleteSystem : ComponentSystem
     {
         public struct Data
         {
             public readonly int Length;
             [ReadOnly] public EntityArray Entities;
-            [ReadOnly] public ComponentDataArray<TweenComplete> _;
+            [ReadOnly] public ComponentDataArray<TweenLifetime> Ranges;
         }
 
         [Inject] private Data m_Data;
@@ -26,7 +27,12 @@ namespace ECSTween
 
             for (int i = 0; i < m_Data.Length; ++i)
             {
-                PostUpdateCommands.DestroyEntity(m_Data.Entities[i]);
+                var timeRange = m_Data.Ranges[i];
+
+                if (time > (timeRange.StartTime + timeRange.Lifetime) + deltaTime)
+                {
+                    PostUpdateCommands.AddComponent(m_Data.Entities[i], new TweenComplete());
+                }
             }
         }
     }
