@@ -1,4 +1,9 @@
 # ECS-Tween
+
+## ⚠ DEPRECATED ⚠
+> This repository was used for educational purposes, and is now long left abandonned.<br/>
+> Luckily, a more complete solution is out there, check out [PlasticTween](https://github.com/PlasticApps/PlasticTween) !
+ 
 A very simple Unity tweening engine using pure ECS that works with GameObjects!
 
 This is still very early stage, and it only supports position and rotation tweening, and few easing types.
